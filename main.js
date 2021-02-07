@@ -97,3 +97,70 @@ function cursorOnControlPoint(x, y, point) {
     var epsilon = pointRadius;
     return Math.abs(x - point[0]) <= epsilon && Math.abs(y - point[1]) <= epsilon;
 }
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function increaseDegree() {
+    var newControlPoints = [];
+    newControlPoints.push(controlPoints[0]);
+    var n = controlPoints.length;
+
+    for(var i = 1; i < n; i++)
+    {
+        newX = (i / n) * controlPoints[i - 1][0] + ((n - i) / n) * controlPoints[i][0];
+        newY = (i / n) * controlPoints[i - 1][1] + ((n - i) / n) * controlPoints[i][1];
+        newControlPoints.push([newX, newY]);
+    }
+
+    newControlPoints.push(controlPoints[n - 1]);
+    controlPoints = newControlPoints;
+
+    clearCanvas();
+    init();
+}
+
+function decreaseDegree() {
+    var n = controlPoints.length;
+    var matrix = [];
+
+    //if (n === 3) return;
+
+    for (var i = 0; i < n; i++) {
+        matrix[i] = (new Array(n - 1)).fill(0);
+        if (i === 0) { matrix[i][0] = 1; }
+        else if (i === n - 1) {
+            matrix[i][i - 1] = 1;
+        }
+        else {
+            matrix[i][i - 1] = i / n;
+            matrix[i][i] = 1 - matrix[i][i - 1];
+        }
+    }
+
+    var tr = [];
+
+    for(var i = 0; i < matrix[0].length; i++) {
+        tr[i] = (new Array(matrix.length)).fill(0);
+        for(var j = 0; j < matrix.length; j++)
+        {
+            tr[i][j] = matrix[j][i];
+        }
+    }
+
+    var mul = [];
+
+    for(var  i = 0; i < tr.length; i++)
+    {
+        mul[i] = (new Array(tr.length)).fill(0);
+        for(var j = 0; j < tr.length; j++)
+        {
+            mul[i][j] = 0;
+            for(var k = 0; k < tr[i].length; k++)
+            {
+                mul[i][j] += tr[i][k] * matrix[k][j];
+            }
+        }
+    }
+}

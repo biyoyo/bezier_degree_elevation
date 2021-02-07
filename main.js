@@ -12,15 +12,6 @@ var controlPoints = [[canvas.width / 2 - 200, canvas.height / 2 + 100],
 [canvas.width / 2 + 200, canvas.height / 2 + 100]];
 
 function init() {
-    //draw control points
-    ctx.beginPath();
-    for (var i = 0; i < controlPoints.length; i++) {
-        ctx.beginPath();
-        //ctx.lineTo(controlPoints[i][0], controlPoints[i][1]);
-        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
-        ctx.stroke();
-    }
-
     //draw bounding poligon
     ctx.beginPath();
     for(var i = 0; i < controlPoints.length; i++)
@@ -28,6 +19,16 @@ function init() {
         ctx.lineTo(controlPoints[i][0], controlPoints[i][1]);
     }
     ctx.stroke();
+
+    //draw control points
+    ctx.beginPath();
+    for (var i = 0; i < controlPoints.length; i++) {
+        ctx.beginPath();
+        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+        ctx.stroke();
+    }
 
     var points = [];
     var t = 0;
@@ -83,9 +84,8 @@ canvas.addEventListener('mousemove', e => {
         y = e.offsetY;
 
         controlPoints[movingPoint] = [x, y];
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        clearCanvas();
         init();
-
     }
 })
 

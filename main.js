@@ -145,8 +145,7 @@ function decreaseDegree() {
 
     var newControlPoints = multiply(coef, controlPoints);
 
-    newControlPoints = newControlPoints.map(p => p.splice(0, 2));
-    controlPoints = newControlPoints;
+    controlPoints = newControlPoints.map(p => p.splice(0, 2));
 
     clearCanvas();
     init();

@@ -141,15 +141,15 @@ function decreaseDegree() {
 
     var transposed = transpose(matrix);
 
-    var product = multiply(transposed, matrix);
+    var coef = multiply(inverse(multiply(transposed, matrix)), transposed);
 
-    var inv = inverse(product);
+    var newControlPoints = multiply(coef, controlPoints);
 
-    var prod = multiply(inv, transposed);
-
-    var newControlPoints = multiply(prod, controlPoints);
-
+    newControlPoints = newControlPoints.map(p => p.splice(0, 2));
     controlPoints = newControlPoints;
+
+    clearCanvas();
+    init();
 }
 
 function transpose(matrix) {

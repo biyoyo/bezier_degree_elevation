@@ -171,8 +171,8 @@ function multiply(A, B) {
 
     for(var  i = 0; i < A.length; i++)
     {
-        product[i] = (new Array(A.length)).fill(0);
-        for(var j = 0; j < A.length; j++)
+        product[i] = (new Array(B[0].length)).fill(0);
+        for(var j = 0; j < B[0].length; j++)
         {
             product[i][j] = 0;
             for(var k = 0; k < A[i].length; k++)

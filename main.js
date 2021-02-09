@@ -7,9 +7,9 @@ canvas.style.border = "1px solid #000000"
 var pointRadius = 5;
 var isMoving = false;
 
-var controlPoints = [[canvas.width / 2 - 200, canvas.height / 2 + 100],
+var controlPoints = [[canvas.width / 2 - 200, canvas.height / 2 + 120],
 [canvas.width / 2, canvas.height / 2 - 200],
-[canvas.width / 2 + 200, canvas.height / 2 + 100]];
+[canvas.width / 2 + 200, canvas.height / 2 + 120]];
 
 function init() {
     //draw bounding poligon
@@ -20,17 +20,6 @@ function init() {
     }
     ctx.stroke();
 
-    //draw control points
-    ctx.beginPath();
-    for (var i = 0; i < controlPoints.length; i++) {
-        ctx.beginPath();
-        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'blue';
-        ctx.fill();
-        ctx.stroke();
-    }
-
-    var points = [];
     var t = 0;
 
     ctx.beginPath();
@@ -47,6 +36,15 @@ function init() {
     }
     ctx.stroke();
 
+    //draw control points
+    ctx.beginPath();
+    for (var i = 0; i < controlPoints.length; i++) {
+        ctx.beginPath();
+        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+        ctx.stroke();
+    }
 }
 
 function binomial(n, k) {
@@ -94,7 +92,7 @@ window.addEventListener('mouseup', e => {
 })
 
 function cursorOnControlPoint(x, y, point) {
-    var epsilon = pointRadius;
+    var epsilon = pointRadius + 1;
     return Math.abs(x - point[0]) <= epsilon && Math.abs(y - point[1]) <= epsilon;
 }
 

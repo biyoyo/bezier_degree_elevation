@@ -125,7 +125,7 @@ function decreaseDegree() {
     var n = controlPoints.length;
     var matrix = [];
 
-    //if (n === 3) return;
+    if (n === 3) return;
 
     for (var i = 0; i < n; i++) {
         matrix[i] = (new Array(n - 1)).fill(0);
@@ -139,6 +139,20 @@ function decreaseDegree() {
         }
     }
 
+    var transposed = transpose(matrix);
+
+    var product = multiply(transposed, matrix);
+
+    var inv = inverse(product);
+
+    var prod = multiply(inv, transposed);
+
+    var newControlPoints = multiply(prod, controlPoints);
+
+    controlPoints = newControlPoints;
+}
+
+function transpose(matrix) {
     var tr = [];
 
     for(var i = 0; i < matrix[0].length; i++) {

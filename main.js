@@ -149,18 +149,107 @@ function decreaseDegree() {
         }
     }
 
-    var mul = [];
+    return tr;
+}
 
-    for(var  i = 0; i < tr.length; i++)
+function multiply(A, B) {
+    var product = [];
+
+    for(var  i = 0; i < A.length; i++)
     {
-        mul[i] = (new Array(tr.length)).fill(0);
-        for(var j = 0; j < tr.length; j++)
+        product[i] = (new Array(A.length)).fill(0);
+        for(var j = 0; j < A.length; j++)
         {
-            mul[i][j] = 0;
-            for(var k = 0; k < tr[i].length; k++)
+            product[i][j] = 0;
+            for(var k = 0; k < A[i].length; k++)
             {
-                mul[i][j] += tr[i][k] * matrix[k][j];
+                product[i][j] += A[i][k] * B[k][j];
             }
         }
     }
+
+    return product;
+}
+
+function cofactor(A, rowToGo, colToGo) {
+    var i = 0, j = 0;
+    var dimension = A.length - 1;
+    var cofactor = [];
+
+    for(var row = 0; row < A.length; row++)
+    {
+        for(var col = 0; col < A[row].length; col++)
+        {
+            if(row != rowToGo && col != colToGo)
+            {
+                if(cofactor.length <= i)
+                {
+                    cofactor.push((new Array(dimension)).fill(0));
+                }
+                cofactor[i][j++] = A[row][col];
+
+                if(j == dimension)
+                {
+                    j = 0;
+                    i++;
+                }
+            }
+        }
+    }
+
+    return cofactor;
+}
+
+function determinant(A)
+{
+    var det = 0;
+
+    if(A.length == 1)
+    {
+        return A[0][0];
+    }
+
+    var sign = 1;
+
+    for(var col = 0; col < A.length; col++)
+    {
+        var cof = cofactor(A, 0, col);
+
+        det += sign * A[0][col] * determinant(cof);
+
+        sign = -sign;
+    }
+
+    return det;
+}
+
+function adjoint(A) {
+    var sign = 1;
+    var dimension = A.length;
+    var adj = [];
+
+    for (var i = 0; i < dimension; i++) {
+        adj[i] = (new Array(A.length)).fill(0);
+        for (var j = 0; j < dimension; j++) {
+            var cof = cofactor(A, i, j);
+            sign = (i + j) % 2 == 0 ? 1 : -1;
+            adj[i][j] = sign * determinant(cof);
+        }
+    }
+    return adj;
+}
+
+function inverse(A) {
+    var det = determinant(A);
+
+    if(det == 0) {
+        console.log("Matrix does not have inverse");
+        return;
+    }
+
+    var adj = transpose(adjoint(A));
+
+    var inv = adj.map(row => row.map(elem => elem/det));
+
+    return inv;
 }

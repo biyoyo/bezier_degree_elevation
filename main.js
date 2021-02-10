@@ -14,6 +14,8 @@ var controlPoints = [[canvas.width / 2 - 200, canvas.height / 2 + 120],
 function init() {
     //draw bounding poligon
     ctx.beginPath();
+    ctx.setLineDash([8, 8]);
+    ctx.lineWidth = 1;
     for(var i = 0; i < controlPoints.length; i++)
     {
         ctx.lineTo(controlPoints[i][0], controlPoints[i][1]);
@@ -23,6 +25,8 @@ function init() {
     var t = 0;
 
     ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
     var n = controlPoints.length - 1;
     for (var i = 0; i < 100; i++) {
         var x = 0, y = 0;

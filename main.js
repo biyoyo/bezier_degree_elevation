@@ -28,7 +28,7 @@ function init() {
     ctx.setLineDash([]);
     ctx.lineWidth = 2;
     var n = controlPoints.length - 1;
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i <= 100; i++) {
         var x = 0, y = 0;
         for (var j = 0; j <= n; j++) {
             var coef = binomial(n, j) * Math.pow((1 - t), (n - j)) * Math.pow(t, j);

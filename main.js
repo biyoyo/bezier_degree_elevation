@@ -1,5 +1,6 @@
 var canvas = document.getElementById("curve")
 var ctx = canvas.getContext("2d");
+
 canvas.width = 1080;
 canvas.height = 500;
 
@@ -21,6 +22,48 @@ function init() {
     }
     ctx.stroke();
 
+    //draw bezier curve
+    //drawBezierCurve();
+    drawBezierCurveCasteljau();
+
+    //draw control points
+    ctx.beginPath();
+    for (var i = 0; i < controlPoints.length; i++) {
+        ctx.beginPath();
+        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+        ctx.stroke();
+    }
+    ctx.textAlign = "left";
+    ctx.fillStyle = "black";
+    ctx.font = "30px Arial"
+    ctx.fillText("Degree: " + (controlPoints.length - 1), 10, 30);
+}
+
+function drawBezierCurveCasteljau() {
+    var t = 0.0;
+    var curveDegree = controlPoints.length - 1;
+    ctx.beginPath();
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
+
+    for (var i = 0; i <= 100; i++) {
+        var controlArr = [...controlPoints];
+        for(var j = 0; j < curveDegree; j++) {
+            for(var r = 0; r < curveDegree - j; r++) {
+                var newX = (1 - t) * controlArr[r][0] + t * controlArr[r + 1][0];
+                var newY = (1 - t) * controlArr[r][1] + t * controlArr[r + 1][1];
+                controlArr[r] = [newX, newY];
+            }
+        }
+        t += 0.01;
+        ctx.lineTo(controlArr[0][0], controlArr[0][1]);
+    }
+    ctx.stroke();
+}
+
+function drawBezierCurve() {
     var t = 0;
 
     ctx.beginPath();
@@ -38,16 +81,6 @@ function init() {
         ctx.lineTo(x, y);
     }
     ctx.stroke();
-
-    //draw control points
-    ctx.beginPath();
-    for (var i = 0; i < controlPoints.length; i++) {
-        ctx.beginPath();
-        ctx.arc(controlPoints[i][0], controlPoints[i][1], pointRadius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'blue';
-        ctx.fill();
-        ctx.stroke();
-    }
 }
 
 function binomial(n, k) {
@@ -90,7 +123,7 @@ canvas.addEventListener('mousemove', e => {
     }
 })
 
-window.addEventListener('mouseup', e => {
+window.addEventListener('mouseup', _ => {
     isMoving = false;
 })
 

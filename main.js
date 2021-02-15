@@ -63,39 +63,6 @@ function drawBezierCurveCasteljau() {
     ctx.stroke();
 }
 
-function drawBezierCurve() {
-    var t = 0;
-
-    ctx.beginPath();
-    ctx.setLineDash([]);
-    ctx.lineWidth = 2;
-    var n = controlPoints.length - 1;
-    for (var i = 0; i <= 100; i++) {
-        var x = 0, y = 0;
-        for (var j = 0; j <= n; j++) {
-            var coef = binomial(n, j) * Math.pow((1 - t), (n - j)) * Math.pow(t, j);
-            x += coef * controlPoints[j][0];
-            y += coef * controlPoints[j][1];
-        }
-        t += 0.01;
-        ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-}
-
-function binomial(n, k) {
-
-    var result = 1;
-    for (var x = n - k + 1; x <= n; x++) {
-        result *= x;
-    }
-    for (var x = 1; x <= k; x++) {
-        result /= x;
-    }
-
-    return result;
-}
-
 var movingPoint;
 
 canvas.addEventListener('mousedown', e => {

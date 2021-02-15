@@ -2,7 +2,6 @@ var canvas = document.getElementById("curve")
 var ctx = canvas.getContext("2d");
 canvas.width = 1080;
 canvas.height = 500;
-canvas.style.border = "1px solid #000000"
 
 var pointRadius = 5;
 var isMoving = false;
@@ -12,7 +11,7 @@ var controlPoints = [[canvas.width / 2 - 200, canvas.height / 2 + 120],
 [canvas.width / 2 + 200, canvas.height / 2 + 120]];
 
 function init() {
-    //draw bounding poligon
+    //draw bounding polygon
     ctx.beginPath();
     ctx.setLineDash([8, 8]);
     ctx.lineWidth = 1;

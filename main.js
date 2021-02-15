@@ -23,7 +23,6 @@ function init() {
     ctx.stroke();
 
     //draw bezier curve
-    //drawBezierCurve();
     drawBezierCurveCasteljau();
 
     //draw control points

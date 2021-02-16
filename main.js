@@ -36,7 +36,7 @@ function init() {
     }
     ctx.textAlign = "left";
     ctx.fillStyle = "black";
-    ctx.font = "30px Arial"
+    ctx.font = "30px Arial";
     ctx.fillText("Degree: " + (controlPoints.length - 1), 10, 30);
 }
 
